@@ -47,14 +47,21 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="fLw-CQ-4Wm"/>
                         <barButtonItem title="New folder" id="4GQ-sN-u6f">
                             <connections>
-                                <action selector="newFolder:" destination="QLG-52-aRQ" id="za9-ln-mnP"/>
+                                <action selector="newFolder:" destination="QLG-52-aRQ" id="bsc-VB-jsA"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="b3H-jj-zud">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="MXH-W0-YFD"/>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="MXH-W0-YFD">
+                            <connections>
+                                <action selector="edit:" destination="QLG-52-aRQ" id="f3h-5u-9Na"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="folderTableView" destination="cYh-Yn-u6t" id="Cvo-UR-JqF"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xfz-zJ-de7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

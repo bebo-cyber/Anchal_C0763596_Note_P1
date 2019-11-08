@@ -10,6 +10,8 @@ import UIKit
 
 class folderClass: UITableViewController {
     
+    @IBOutlet var folderTableView: UITableView!
+    
     var folders: [String]?
 
    
@@ -54,25 +56,65 @@ class folderClass: UITableViewController {
     }
 
    
-    @IBAction func newFolder(_ sender: Any) {
-        
+   
+    @IBAction func newFolder(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "New folder", message: "Enter a name for this folder", preferredStyle: .alert)
+                          
+                          
+              let confirmAction = UIAlertAction(title: "Add Item", style: .default, handler: {[weak alertController]
+                           (_) in
+              
+              let note = alertController?.textFields![0]
+              self.folders?.append(note!.text!)
+              self.folderTableView.reloadData()
+              })
                     
-                    
-                    let confirmAction = UIAlertAction(title: "Add Item", style: .default)
-                    { (_) in }
-                    
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-                    { (_) in }
-                    
-                    alertController.addTextField
-                        { (textfield) in
-                            textfield.placeholder = "Enter name"
-                    }
-                    alertController.addAction(confirmAction)
-                    alertController.addAction(cancelAction)
+             
+                          let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                          { (_) in }
+                          
+                          alertController.addTextField
+                              { (textfield) in
+                                  textfield.placeholder = "Enter name"
+                          }
+                          alertController.addAction(confirmAction)
+                          alertController.addAction(cancelAction)
 
-                    self.present(alertController,animated: true, completion: nil)
+                          self.present(alertController,animated: true, completion: nil)
+          
+    }
+    
+      
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
+    {
+        let moveFolder = folders?[sourceIndexPath.item]
+        folders?.remove(at: sourceIndexPath.item)
+        folders?.insert(moveFolder!, at: destinationIndexPath.item)
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        
+        return .none
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if (editingStyle == .delete)
+        {
+            folders?.remove(at: indexPath.item)
+            folderTableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+
+    @IBAction func edit(_ sender: UIBarButtonItem) {
+        self.folderTableView.isEditing = !self.folderTableView.isEditing
+        sender.title = (self.folderTableView.isEditing) ? "Done" : "Edit"
     }
 }
     /*
